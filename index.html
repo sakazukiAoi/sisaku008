@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>naGG語に変換</title>
+  <style>
+    /* 入力欄の基本スタイル */
+    #inputField {
+      width: 100%;
+      min-height: 40px; /* 最小高さ */
+      padding: 8px;
+      box-sizing: border-box;
+      resize: none; /* ユーザーによるサイズ変更を無効にする */
+      overflow-y: hidden; /* スクロールバーを非表示にする */
+    }
+  </style>
+
+
+</head>
+<body>
+  <h3>文字を入力してください（naGG語に変換されます）</h3>
+    <textarea id="inputField" placeholder="ここに入力"></textarea>
+
+  <h3>変換結果:</h3>
+  <div id="previewField" style="border: 1px solid #333; padding: 8px; min-height: 20px;"></div>
+  <button id="copyButton">変換結果をコピー</button>
+
+  <script>
+    // 入力フィールドとプレビューフィールド、ボタンの要素を取得
+    const inputField = document.getElementById("inputField");
+    const previewField = document.getElementById("previewField");
+    const copyButton = document.getElementById("copyButton");
+
+    // 入力時に変換してプレビューに表示
+    inputField.addEventListener("input", () => {
+      const originalText = inputField.value.toLowerCase(); // 小文字に変換
+
+      // 各文字を変換
+      const transformedText = originalText
+        .split("")
+        .map(char => {
+          if (char === "a") return "π;";
+          if (char === "b") return "ス";
+          if (char === "c") return "y";
+          if (char === "d") return "二";
+          if (char === "e") return "e";
+          if (char === "f") return "S";
+          if (char === "g") return "R";
+          if (char === "h") return "|으";
+          if (char === "i") return "O";
+          if (char === "j") return "ɓ";
+          if (char === "k") return "つ";
+          if (char === "l") return "Đ";
+          if (char === "m") return "H";
+          if (char === "n") return "牛";
+          if (char === "o") return "ჵᖇ";
+          if (char === "p") return "月";
+          if (char === "q") return "h";
+          if (char === "r") return "b";
+          if (char === "s") return "Ɵ";
+          if (char === "t") return "G";
+          if (char === "u") return "Ƹ";
+          if (char === "v") return "g";
+          if (char === "w") return "う";
+          if (char === "x") return "ħ ";
+          if (char === "y") return "L ";
+          if (char === "z") return "ჩh";
+          if (char === "!") return "Ⴘ";
+          if (char === "「") return "ɾ";
+          if (char === "【") return "ɾ";
+          if (char === "{") return "ɾ";
+          if (char === "｛") return "ɾ";
+          if (char === "[") return "ɾ";
+          if (char === "」") return "ɿ";
+          if (char === "】") return "ɿ";
+          if (char === "}") return "ɿ";
+          if (char === "]") return "ɿ";
+          if (char === " ") return "  ";
+
+          return char;
+        })
+        .join("");
+      // 変換結果をプレビューフィールドに表示
+      previewField.textContent = transformedText;
+    });
+
+    // コピー機能
+    copyButton.addEventListener("click", () => {
+      const textToCopy = previewField.textContent;
+
+      // クリップボードにコピー
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+
+        })
+        .catch(err => {
+          alert("コピーに失敗しました: " + err);
+        });
+    });
+  </script>
+
+  <script>
+    // 入力欄の要素を取得
+    const inputField = document.getElementById("inputField");
+
+    // 入力内容に応じて自動で高さを調整する関数
+    function adjustHeight() {
+      inputField.style.height = 'auto'; // 一旦高さをリセット
+      inputField.style.height = inputField.scrollHeight + 'px'; // 内容に応じた高さに設定
+    }
+
+    // 入力時に高さを自動調整
+    inputField.addEventListener("input", adjustHeight);
+
+    // 初期化: ページ読み込み時に高さを調整
+    window.addEventListener("load", adjustHeight);
+  </script>
+
+
+
+
+</body>
+</html>

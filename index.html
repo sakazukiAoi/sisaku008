@@ -1,174 +1,334 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+            <style>
+        main {
+ font-family: 'Noto Sans JP', sans-serif;
+width: 800px;
+ margin: 0 auto;
+ padding: 20px;
+ background-color: #f5f5f5;
+        }
+        h1 {
+ color: #333;
+ text-align: center;
+        }
+        .container {
+ background-color: white;
+ padding: 20px;
+ border-radius: 8px;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section {
+ margin-bottom: 20px;
+ padding-bottom: 20px;
+ border-bottom: 1px solid #eee;
+        }
+        .section-title {
+ font-weight: bold;
+ margin-bottom: 10px;
+        }
+        .input-container {
+ display: flex;
+ align-items: center;
+ margin-bottom: 10px;
+        }
+        .input-container label {
+ width: 80px;
+ margin-right: 10px;
+        }
+        .input-container input {
+ flex: 1;
+ padding: 8px;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+        }
+        .result {
+ margin-left: 10px;
+ color: #444;
+        }
+        textarea {
+ width: 100%;
+ height: 150px;
+ padding: 10px;
+ margin-bottom: 10px;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+ font-size: 16px;
+ resize: vertical;
+        }
+        .output {
+ background-color: #f9f9f9;
+ border: 1px solid #ddd;
+ border-radius: 4px;
+ padding: 10px;
+ margin-top: 10px;
+ min-height: 100px;
+ white-space: pre-wrap;
+ font-family: 'Courier New', monospace;
+ font-size: 16px;
+        }
+        .special-output {
+ font-family: 'Arial', sans-serif;
+        }
+</style>
+  </head>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>naGG語に変換</title>
-  <style>
-    /* 入力欄の基本スタイル */
-    #inputField {
-      width: 100%;
-      min-height: 40px; /* 最小高さ */
-      padding: 8px;
-      box-sizing: border-box;
-      resize: none; /* ユーザーによるサイズ変更を無効にする */
-      overflow-y: hidden; /* スクロールバーを非表示にする */
-    }
-  </style>
-
-
+   <meta charset="utf-8"/>
+   <title>TMC</title>
+   <link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
 </head>
 <body>
-  <h3>文字を入力してください（naGG語に変換されます）</h3>
-    <textarea id="inputField" placeholder="ここに入力"></textarea>
+	<main>
 
-  <h3>変換結果:</h3>
-  <div id="previewField" style="border: 1px solid #333; padding: 8px; min-height: 20px;"></div>
-  <button id="copyButton">変換結果をコピー</button>
+    <div class="container">
+        <!-- Number Conversion Section -->
+        <div class="section">
+ <div class="section-title">数値変換</div>
+ <div class="input-container">
+     <label for="decimal-input">10進数:</label>
+     <input type="text" id="decimal-input" placeholder="10進数を入力" />
+     <span class="result" id="hex-result"></span>
+ </div>
+ <div class="input-container">
+     <label for="hex-input">16進数:</label>
+     <input type="text" id="hex-input" placeholder="16進数を入力" />
+     <span class="result" id="decimal-result"></span>
+ </div>
+        </div>
+        
+        <!-- Text Conversion Section -->
+        <div class="section">
+ <div class="section-title">文字変換</div>
+ <div>
+     <label for="input">ひらがな入力:</label>
+     <textarea id="input" placeholder="ここに入力してください..."></textarea>
+ </div>
+ 
+ <div>
+     <label for="output">Romaji output:</label>
+     <div id="output" class="output"></div>
+ </div>
+ 
+ <div>
+     <label for="special-output">Special transformation output:</label>
+     <div id="special-output" class="output special-output"></div>
+ </div>
+ 
+        </div>
+    </div>
 
-  <script>
-    // 入力フィールドとプレビューフィールド、ボタンの要素を取得
-    const inputField = document.getElementById("inputField");
-    const previewField = document.getElementById("previewField");
-    const copyButton = document.getElementById("copyButton");
-
-    // 入力時に変換してプレビューに表示
-    inputField.addEventListener("input", () => {
-      const originalText = inputField.value.toLowerCase(); // 小文字に変換
-
-      // 各文字を変換
-      const transformedText = originalText
-        .split("")
-        .map(char => {
-          if (char === "a") return "π;";
-          if (char === "b") return "ス";
-          if (char === "c") return "y";
-          if (char === "d") return "二";
-          if (char === "e") return "e";
-          if (char === "f") return "S";
-          if (char === "g") return "R";
-          if (char === "h") return "|으";
-          if (char === "i") return "O";
-          if (char === "j") return "ɓ";
-          if (char === "k") return "つ";
-          if (char === "l") return "Đ";
-          if (char === "m") return "H";
-          if (char === "n") return "牛";
-          if (char === "o") return "ჵᖇ";
-          if (char === "p") return "月";
-          if (char === "q") return "h";
-          if (char === "r") return "b";
-          if (char === "s") return "Ɵ";
-          if (char === "t") return "G";
-          if (char === "u") return "Ƹ";
-          if (char === "v") return "g";
-          if (char === "w") return "う";
-          if (char === "x") return "ħ";
-          if (char === "y") return "L";
-          if (char === "z") return "ჩh";
-          if (char === "!") return "Ⴘ";
-          if (char === "「") return "ɾ";
-          if (char === "【") return "ɾ";
-          if (char === "{") return "ɾ";
-          if (char === "｛") return "ɾ";
-          if (char === "[") return "ɾ";
-          if (char === "」") return "ɿ";
-          if (char === "】") return "ɿ";
-          if (char === "}") return "ɿ";
-          if (char === "]") return "ɿ";
-          if (char === "あ") return "H";
-          if (char === "い") return "";
-          if (char === "う") return "";
-          if (char === "え") return "";
-          if (char === "お") return "";
-          if (char === "か") return "";
-          if (char === "き") return "";
-          if (char === "く") return "";
-          if (char === "け") return "";
-          if (char === "こ") return "";
-          if (char === "さ") return "";
-          if (char === "し") return "";
-          if (char === "す") return "";
-          if (char === "せ") return "";
-          if (char === "そ") return "";
-          if (char === "た") return "";
-          if (char === "ち") return "";
-          if (char === "つ") return "";
-          if (char === "て") return "";
-          if (char === "と") return "";
-          if (char === "な") return "";
-          if (char === "に") return "";
-          if (char === "ぬ") return "";
-          if (char === "ね") return "";
-          if (char === "の") return "";
-          if (char === "は") return "";
-          if (char === "ひ") return "";
-          if (char === "ふ") return "";
-          if (char === "へ") return "";
-          if (char === "ほ") return "";
-          if (char === "ま") return "";
-          if (char === "み") return "";
-          if (char === "む") return "";
-          if (char === "め") return "";
-          if (char === "も") return "";
-          if (char === "や") return "";
-          if (char === "ぃ") return "";
-          if (char === "ゆ") return "";
-          if (char === "ぇ") return "";
-          if (char === "よ") return "";
-          if (char === "ら") return "";
-          if (char === "り") return "";
-          if (char === "る") return "";
-          if (char === "れ") return "";
-          if (char === "ろ") return "";
-          if (char === "わ") return "";
-          if (char === "を") return "";
-          if (char === "ん") return "";
-          if (char === "、") return ",";
-          if (char === "。") return ".";
-
-
-          return char;
-        })
-        .join("");
-      // 変換結果をプレビューフィールドに表示
-      previewField.textContent = transformedText;
-    });
-
-    // コピー機能
-    copyButton.addEventListener("click", () => {
-      const textToCopy = previewField.textContent;
-
-      // クリップボードにコピー
-      navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-
-        })
-        .catch(err => {
-          alert("コピーに失敗しました: " + err);
+    <script>
+        // Initialize event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+ initNumberConverters();
+ initTextConverter();
         });
-    });
-  </script>
 
-  <script>
-    // 入力欄の要素を取得
-    const inputField = document.getElementById("inputField");
+        // Number conversion functions
+        function initNumberConverters() {
+ const decimalInput = document.getElementById("decimal-input");
+ const hexInput = document.getElementById("hex-input");
+ const hexResult = document.getElementById("hex-result");
+ const decimalResult = document.getElementById("decimal-result");
 
-    // 入力内容に応じて自動で高さを調整する関数
-    function adjustHeight() {
-      inputField.style.height = 'auto'; // 一旦高さをリセット
-      inputField.style.height = inputField.scrollHeight + 'px'; // 内容に応じた高さに設定
-    }
+ // Decimal to hex conversion
+ decimalInput.addEventListener("input", () => {
+     const decimalValue = parseInt(decimalInput.value, 10);
+     if (!isNaN(decimalValue)) {
+         hexResult.textContent = `= ${decimalValue.toString(16).toUpperCase()} (16進数)`;
+     } else {
+         hexResult.textContent = "";
+     }
+ });
 
-    // 入力時に高さを自動調整
-    inputField.addEventListener("input", adjustHeight);
+ // Hex to decimal conversion
+ hexInput.addEventListener("input", () => {
+     const hexValue = hexInput.value.trim();
+     const decimalValue = parseInt(hexValue, 16);
+     if (!isNaN(decimalValue)) {
+         decimalResult.textContent = `= ${decimalValue} (10進数)`;
+     } else {
+         decimalResult.textContent = "";
+     }
+ });
+        }
 
-    // 初期化: ページ読み込み時に高さを調整
-    window.addEventListener("load", adjustHeight);
-  </script>
+        // Text conversion functions
+        function initTextConverter() {
+ const inputTextarea = document.getElementById('input');
+ inputTextarea.addEventListener('input', convertText);
+        }
 
+        function convertText() {
+ const input = document.getElementById('input').value;
+ const result = convertToRomaji(input);
+ 
+ // Display the result with line breaks preserved
+ document.getElementById('output').textContent = result;
+ 
+ // Apply special transformation to the romaji result
+ applySpecialTransformation(result);
+        }
+        
+        function convertToRomaji(input) {
+ // Character mapping definitions
+ const conversionMap = getConversionMap();
+ 
+ // Convert text using the longest match first approach
+ const chars = Array.from(input);
+ let result = '';
+ let i = 0;
+ 
+ while (i < chars.length) {
+     let matched = false;
+     
+     // Try to match 3-character sequences
+     if (i + 2 < chars.length) {
+         const threeChars = chars[i] + chars[i+1] + chars[i+2];
+         if (conversionMap[threeChars]) {
+  result += conversionMap[threeChars];
+  i += 3;
+  matched = true;
+  continue;
+         }
+     }
+     
+     // Try to match 2-character sequences
+     if (i + 1 < chars.length) {
+         const twoChars = chars[i] + chars[i+1];
+         if (conversionMap[twoChars]) {
+  result += conversionMap[twoChars];
+  i += 2;
+  matched = true;
+  continue;
+         }
+     }
+     
+     // Match single character
+     if (conversionMap[chars[i]]) {
+         result += conversionMap[chars[i]];
+         i++;
+         matched = true;
+         continue;
+     }
+     
+     // If no match found, keep the original character
+     if (!matched) {
+         result += chars[i];
+         i++;
+     }
+ }
+ 
+ return result;
+        }
+        
+        function applySpecialTransformation(originalText) {
+ // Character transformation mapping
+ const charTransform = {
+     'a': 'π;', 'b': 'ス', 'c': 'y', 'd': '二', 'e': 'e',
+     'f': 'S', 'g': 'R', 'h': '|으', 'i': 'p', 'j': '6',
+     'k': 'つ', 'l': 'æ', 'm': '牛', 'n': 'ﾄᖇ', 'o': '月',
+     'p': 'Đ', 'q': 'h', 'r': 'b', 's': 'Ɵ', 't': 'G',
+     'u': 'Ƹ', 'v': 'g', 'w': 'う', 'x': 'ħ', 'y': 'a',
+     'z': 'ჩ', '!': 'Ⴘ', '?': '-ə', '「': 'ɾ', '【': 'ɾ',
+     '{': 'ɾ', '｛': 'ɾ', '[': 'ɾ', '」': 'ɿ', '】': 'ɿ',
+     '}': 'ɿ', ']': 'ɿ'
+ };
+     
+ // Transform each character
+ const transformedText = originalText.split("").map(char => 
+     charTransform[char] || char
+ ).join("");
+     
+ // Display with line breaks preserved
+ document.getElementById('special-output').textContent = transformedText;
+        }
+        
+        function getConversionMap() {
+ // Basic hiragana to romaji mapping
+ const conversionMap = {
+     'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
+     'か': 'ka', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
+     'きゃ': 'kya', 'き': 'kyi', 'きゅ': 'kyu', 'きぇ': 'kye', 'きょ': 'kyo',
+     'が': 'ga', 'げ': 'ge', 'ご': 'go', 'ぐぁ': 'gua', 'ぐ': 'gu',
+     'ぐぇ': 'gue', 'ぐぉ': 'guo', 'ぎゃ': 'gya', 'ぎ': 'gyi', 'ぎゅ': 'gyu',
+     'ぎぇ': 'gye', 'ぎょ': 'gyo', 'す': 'su', 'せ': 'se', 'そ': 'so',
+     'さ': 'wa', 'しゃ': 'la', 'し': 'li', 'しゅ': 'lu', 'しょ': 'lo',
+     'すぁ': 'sya', 'すぃ': 'syi', 'すぅ': 'syu', 'すぇ': 'sye', 'すぉ': 'syo',
+     'ざ': 'dza', 'ず': 'dzu', 'ぜ': 'dze', 'ぞ': 'dzo',
+     'じゃ': 'ja', 'じ': 'ji', 'じゅ': 'ju', 'じぇ': 'je', 'じょ': 'jo',
+     'ずぁ': 'zya', 'ずぃ': 'zyi', 'ずゅ': 'zyu', 'ずぇ': 'zye', 'ずぉ': 'zyo',
+     'た': 'ta', 'て': 'te', 'と': 'to',
+     'ちゃ': 'tca', 'ち': 'tci', 'ちゅ': 'tco', 'ちょ': 'tco',
+     'つぁ': 'tsa', 'つぃ': 'tsi', 'つ': 'tsu', 'つぇ': 'tse', 'つぉ': 'tso',
+     'とぁ': 'toua', 'とぃ': 'toui', 'とぅ': 'tou', 'とぇ': 'toue', 'とぉ': 'touo',
+     'てゃ': 'tya', 'てぃ': 'tyi', 'てゅ': 'tyu', 'て': 'tye', 'てぉ': 'tyo',
+     'だ': 'da', 'ぢ': 'ji', 'づ': 'dzu', 'でぃ': 'di', 'でゅ': 'du',
+     'で': 'de', 'ど': 'do', 'どぁ': 'dua', 'どぃ': 'dui', 'どぇ': 'due',
+     'どぉ': 'duo', 'でゃ': 'dya', 'でゅ': 'dyu', 'でぇ': 'dye', 'でょ': 'dyo',
+     'な': 'na', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no',
+     'にゃ': 'qa', 'に': 'qi', 'にゅ': 'qu', 'にょ': 'qo',
+     'は': 'ha', 'へ': 'he', 'ほ': 'ho', 'ふ': 'hu',
+     'ひゃ': 'wa', 'ひゅ': 'wu', 'ひょ': 'wo', 'ひ': 'wyi',
+     'ば': 'ba', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
+     'びゃ': 'bya', 'び': 'byi', 'びゅ': 'byu', 'びょ': 'byo',
+     'ぱ': 'pa', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
+     'ぴゃ': 'pya', 'ぴ': 'pyi', 'ぴゅ': 'pyu', 'ぴぇ': 'pye', 'ぴょ': 'pyo',
+     'ま': 'ma', 'む': 'mu', 'め': 'me', 'も': 'mo',
+     'みゃ': 'mya', 'み': 'myi', 'みゅ': 'myu', 'みぇ': 'mye', 'みょ': 'myo',
+     'ら': 'ra', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
+     'りゃ': 'rya', 'り': 'ryi', 'りゅ': 'ryu', 'りぇ': 'rye', 'りょ': 'ryo',
+     'や': 'ya', 'ゆ': 'yu', 'よ': 'yo', 'を': 'o', 'ん': 'n',
+     'わ': 'ua', 'うぃ': 'ui', 'うぇ': 'ue', 'うぉ': 'uo',
+     'ヴぁ': 'va', 'ヴぃ': 'vi', 'ヴ': 'vu', 'ヴぇ': 've', 'ヴぉ': 'vo',
+     'っ': 'x', 'くぁ': 'ka', 'くぃ': 'kyi', 'く': 'ku', 'くぇ': 'ke', 'くぉ': 'ko',
+     'うぁ': 'ua', 'ちぃ': 'tci-', 'ちぇ': 'tce', 'すぇ': 'se', 'しぇ': 'se',
+     'ふぁ': 'fa', 'ふぃ': 'fi', 'ふぇ': 'fe', 'ふぉ': 'fo'
+ };
+ 
+ // Add katakana equivalents to the conversion map
+ const hiraganaToKatakana = {
+     'あ': 'ア', 'い': 'イ', 'う': 'ウ', 'え': 'エ', 'お': 'オ',
+     'か': 'カ', 'き': 'キ', 'く': 'ク', 'け': 'ケ', 'こ': 'コ',
+     'さ': 'サ', 'し': 'シ', 'す': 'ス', 'せ': 'セ', 'そ': 'ソ',
+     'た': 'タ', 'ち': 'チ', 'つ': 'ツ', 'て': 'テ', 'と': 'ト',
+     'な': 'ナ', 'に': 'ニ', 'ぬ': 'ヌ', 'ね': 'ネ', 'の': 'ノ',
+     'は': 'ハ', 'ひ': 'ヒ', 'ふ': 'フ', 'へ': 'ヘ', 'ほ': 'ホ',
+     'ま': 'マ', 'み': 'ミ', 'む': 'ム', 'め': 'メ', 'も': 'モ',
+     'や': 'ヤ', 'ゆ': 'ユ', 'よ': 'ヨ',
+     'ら': 'ラ', 'り': 'リ', 'る': 'ル', 'れ': 'レ', 'ろ': 'ロ',
+     'わ': 'ワ', 'を': 'ヲ', 'ん': 'ン',
+     'が': 'ガ', 'ぎ': 'ギ', 'ぐ': 'グ', 'げ': 'ゲ', 'ご': 'ゴ',
+     'ざ': 'ザ', 'じ': 'ジ', 'ず': 'ズ', 'ぜ': 'ゼ', 'ぞ': 'ゾ',
+     'だ': 'ダ', 'ぢ': 'ヂ', 'づ': 'ヅ', 'で': 'デ', 'ど': 'ド',
+     'ば': 'バ', 'び': 'ビ', 'ぶ': 'ブ', 'べ': 'ベ', 'ぼ': 'ボ',
+     'ぱ': 'パ', 'ぴ': 'ピ', 'ぷ': 'プ', 'ぺ': 'ペ', 'ぽ': 'ポ',
+     'きゃ': 'キャ', 'きゅ': 'キュ', 'きょ': 'キョ',
+     'しゃ': 'シャ', 'しゅ': 'シュ', 'しょ': 'ショ',
+     'ちゃ': 'チャ', 'ちゅ': 'チュ', 'ちょ': 'チョ',
+     'にゃ': 'ニャ', 'にゅ': 'ニュ', 'にょ': 'ニョ',
+     'ひゃ': 'ヒャ', 'ひゅ': 'ヒュ', 'ひょ': 'ヒョ',
+     'みゃ': 'ミャ', 'みゅ': 'ミュ', 'みょ': 'ミョ',
+     'りゃ': 'リャ', 'りゅ': 'リュ', 'りょ': 'リョ',
+     'ぎゃ': 'ギャ', 'ぎゅ': 'ギュ', 'ぎょ': 'ギョ',
+     'じゃ': 'ジャ', 'じゅ': 'ジュ', 'じょ': 'ジョ',
+     'びゃ': 'ビャ', 'びゅ': 'ビュ', 'びょ': 'ビョ',
+     'ぴゃ': 'ピャ', 'ぴゅ': 'ピュ', 'ぴょ': 'ピョ'
+ };
 
-
-
+ // Add katakana equivalents to the conversion map
+ for (const [hiragana, romaji] of Object.entries(conversionMap)) {
+     if (hiraganaToKatakana[hiragana]) {
+         conversionMap[hiraganaToKatakana[hiragana]] = romaji;
+     }
+ }
+ 
+ return conversionMap;
+        }
+    </script>
+	</main>
 </body>
 </html>
